@@ -2,11 +2,17 @@
 
 namespace xadrez
 {
+
     class Dama : Peca
     {
+
         public Dama(Tabuleiro tab, Cor cor) : base(tab, cor)
         {
+        }
 
+        public override string ToString()
+        {
+            return "D";
         }
 
         private bool podeMover(Posicao pos)
@@ -21,8 +27,8 @@ namespace xadrez
 
             Posicao pos = new Posicao(0, 0);
 
-            // acima
-            pos.definirValores(posicao.linha - 1, posicao.coluna);
+            // esquerda
+            pos.definirValores(posicao.linha, posicao.coluna - 1);
             while (tab.posicaoValida(pos) && podeMover(pos))
             {
                 mat[pos.linha, pos.coluna] = true;
@@ -30,21 +36,7 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.linha = pos.linha - 1;
-
-            }
-
-            // abaixo
-            pos.definirValores(posicao.linha + 1, posicao.coluna);
-            while (tab.posicaoValida(pos) && podeMover(pos))
-            {
-                mat[pos.linha, pos.coluna] = true;
-                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
-                {
-                    break;
-                }
-                pos.linha = pos.linha + 1;
-
+                pos.definirValores(pos.linha, pos.coluna - 1);
             }
 
             // direita
@@ -56,12 +48,11 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.coluna = pos.coluna + 1;
-
+                pos.definirValores(pos.linha, pos.coluna + 1);
             }
 
-            // esquerda
-            pos.definirValores(posicao.linha, posicao.coluna - 1);
+            // acima
+            pos.definirValores(posicao.linha - 1, posicao.coluna);
             while (tab.posicaoValida(pos) && podeMover(pos))
             {
                 mat[pos.linha, pos.coluna] = true;
@@ -69,8 +60,19 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.coluna = pos.coluna - 1;
+                pos.definirValores(pos.linha - 1, pos.coluna);
+            }
 
+            // abaixo
+            pos.definirValores(posicao.linha + 1, posicao.coluna);
+            while (tab.posicaoValida(pos) && podeMover(pos))
+            {
+                mat[pos.linha, pos.coluna] = true;
+                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
+                {
+                    break;
+                }
+                pos.definirValores(pos.linha + 1, pos.coluna);
             }
 
             // NO
@@ -82,8 +84,7 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.definirValores(posicao.linha - 1, posicao.coluna - 1);
-
+                pos.definirValores(pos.linha - 1, pos.coluna - 1);
             }
 
             // NE
@@ -95,8 +96,7 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.definirValores(posicao.linha - 1, posicao.coluna + 1);
-
+                pos.definirValores(pos.linha - 1, pos.coluna + 1);
             }
 
             // SE
@@ -108,8 +108,7 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.definirValores(posicao.linha + 1, posicao.coluna + 1);
-
+                pos.definirValores(pos.linha + 1, pos.coluna + 1);
             }
 
             // SO
@@ -121,16 +120,10 @@ namespace xadrez
                 {
                     break;
                 }
-                pos.definirValores(posicao.linha + 1, posicao.coluna - 1);
-
+                pos.definirValores(pos.linha + 1, pos.coluna - 1);
             }
 
             return mat;
-        }
-
-        public override string ToString()
-        {
-            return "D";
         }
     }
 }
